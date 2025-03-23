@@ -578,7 +578,7 @@ describe('filesystemBackedImpostersRepository', function () {
                         lastResponseFile = meta.responseFiles[1],
                         responsePath = `.mbtest/3000/${stubDir}/${lastResponseFile}`;
 
-                    fs.writeFileSync(responsePath, "{TEST:'CORRUPTED'}");
+                    fs.writeFileSync(responsePath, 'CORRUPTED');
 
                     try {
                         await stubs.toJSON();
@@ -588,7 +588,7 @@ describe('filesystemBackedImpostersRepository', function () {
                         assert.deepEqual(err, {
                             code: 'corrupted database',
                             message: `invalid JSON in ${responsePath}`,
-                            details: 'Unexpected token \'C\', "CORRUPTED" is not valid JSON'
+                            details: 'Unexpected token C in JSON at position 0'
                         });
                     }
                 });
