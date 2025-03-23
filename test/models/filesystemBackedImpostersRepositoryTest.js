@@ -578,7 +578,7 @@ describe('filesystemBackedImpostersRepository', function () {
                         lastResponseFile = meta.responseFiles[1],
                         responsePath = `.mbtest/3000/${stubDir}/${lastResponseFile}`;
 
-                    fs.writeFileSync(responsePath, 'CORRUPTED');
+                    fs.writeFileSync(responsePath, "{TEST:'CORRUPTED'}");
 
                     try {
                         await stubs.toJSON();
