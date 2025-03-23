@@ -1,7 +1,7 @@
 'use strict';
 
-const xpath = require('xpath'),
-    xmlDom = require('@xmldom/xmldom'),
+const xpath = require('xpath')
+const  { DOMParser } =  require('@xmldom/xmldom'),
     errors = require('../util/errors.js'),
     helpers = require('../util/helpers.js');
 
@@ -63,18 +63,20 @@ function nodeValue (node) {
  * @param {Object} ns - The namespace map
  * @param {String} possibleXML - the xml
  * @param {Object} logger - Optional, used to log XML parsing errors
+ * @param {*} mimeType 
  * @returns {Object}
  */
-function select (selector, ns, possibleXML, logger) {
-    const DOMParser = xmlDom.DOMParser,
-        parser = new DOMParser({
-            errorHandler: (level, message) => {
-                const warn = (logger || {}).warn || (() => {});
-                warn('%s (source: %s)', message, JSON.stringify(possibleXML));
-            }
-        }),
-        doc = parser.parseFromString(possibleXML),
-        selectFn = xpath.useNamespaces(ns || {}),
+function select (selector, ns, possibleXML, logger,mimeType) {
+    // const DOMParser = xmlDom.DOMParser,
+    //     parser = new DOMParser({
+    //         errorHandler: (level, message) => {
+    //             const warn = (logger || {}).warn || (() => {});
+    //             warn('%s (source: %s)', message, JSON.stringify(possibleXML));
+    //         }
+    //     }),
+         const doc = new DOMParser().parseFromString(possibleXML,'text/xml')
+       // doc = parser.parseFromString(possibleXML,mimeType),
+        const selectFn = xpath.useNamespaces(ns || {}),
         result = xpathSelect(selectFn, selector, doc);
     let nodeValues;
 

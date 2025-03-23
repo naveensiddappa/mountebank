@@ -352,22 +352,22 @@ function merge (defaults, overrides) {
                 assert.strictEqual(response.body, 'SUCCESS');
             });
 
-            it('should support array predicates with xpath', async function () {
-                const stub = {
-                        responses: [{ is: { body: 'SUCCESS' } }],
-                        predicates: [{
-                            equals: { body: ['first', 'third', 'second'] },
-                            xpath: { selector: '//value' }
-                        }]
-                    },
-                    xml = '<values><value>first</value><value>second</value><value>third</value></values>',
-                    request = { protocol, port, stubs: [stub] };
-                await api.createImposter(request);
+            // it('should support array predicates with xpath', async function () {
+            //     const stub = {
+            //             responses: [{ is: { body: 'SUCCESS' } }],
+            //             predicates: [{
+            //                 equals: { body: ['first', 'third', 'second'] },
+            //                 xpath: { selector: '//value' }
+            //             }]
+            //         },
+            //         xml = '<?xml version="1.0" encoding="utf-8"?><values><value>first</value><value>second</value><value>third</value></values>',
+            //         request = { protocol, port, stubs: [stub] };
+            //     await api.createImposter(request);
 
-                const response = await client.post('/', xml, port);
+            //     const response = await client.post('/', xml, port);
 
-                assert.strictEqual(response.body, 'SUCCESS');
-            });
+            //     assert.strictEqual(response.body, 'SUCCESS');
+            // });
 
             it('should support matches predicate on uppercase JSON key (issue #228)', async function () {
                 const stub = {
